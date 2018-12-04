@@ -1,9 +1,7 @@
-
 scriptname_list = __file__.split("/")
 filename = scriptname_list[-1].split(".")[0] + ".txt"
 scriptname_list[-1] = "inputs/" + filename
 full_filename = "/".join(scriptname_list)
-print(full_filename)
 handle = open(full_filename, "r")
 
 ### Depending of Challenge, read file accordingly ###

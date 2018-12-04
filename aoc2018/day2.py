@@ -2,7 +2,6 @@ scriptname_list = __file__.split("/")
 filename = scriptname_list[-1].split(".")[0] + ".txt"
 scriptname_list[-1] = "inputs/" + filename
 full_filename = "/".join(scriptname_list)
-print(full_filename)
 handle = open(full_filename, "r")
 
 ### Depending of Challenge, read file accordingly ###
@@ -23,4 +22,31 @@ print("Twos",twos)
 print("Threes",threes)
 print(twos*threes)
 
-# for part two, try to convert string to binary
+def match(str1, str2):
+    strike = False
+    index = -1
+    for i in xrange(len(str1)):
+        if (str1[i] != str2[i]):
+            if (strike):
+                return False
+            else:
+                strike = True
+                index = i
+    if (strike):
+        return index
+    else:
+        return False
+
+parsed = []
+for word in str_list:
+    for each in parsed:
+        i = match(word,each)
+        if (i):
+            print(i)
+            print(word)
+            print(each)
+            if (len(word)-1 != i):
+                print(word[0:i] + word[i+1:])
+            break
+    parsed.append(word)
+    
