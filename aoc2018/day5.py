@@ -6,15 +6,11 @@ handle = open(full_filename, "r")
 
 inp = handle.read().rstrip()
 inp_l = list(inp)
-
+# inp_l = list("dabAcCaCBAcCcaDA")
 
 matches = set([chr(x) + chr(y) for x, y in zip(xrange(ord('a'),ord('z')+1), xrange(ord('A'),ord('Z')+1) )])
 second = set([chr(x) + chr(y) for x, y in zip(xrange(ord('A'),ord('Z')+1), xrange(ord('a'),ord('z')+1) )])
-
 matches = matches.union(second)
-
-# inp_l = list("dabAcCaCBAcCcaDA")
-
 
 def react(inp_list):
 	i=0
@@ -29,7 +25,17 @@ def react(inp_list):
 				i = 0
 		else:
 			i+=1
-	# print(inp_list)
-	print(len(inp_list))
+	return inp_list
 
 inp_l = react(inp_l)
+print("Starting Length: ",len(inp_l))
+
+count = []
+for small, caps in zip(xrange(ord('a'),ord('z')+1), xrange(ord('A'),ord('Z')+1)):
+	filtered_list = filter(lambda element: element != chr(small) and element != chr(caps), inp_l)
+	reduced_list = react(filtered_list)
+	print("Eliminated '" + chr(small) + "' : length", len(reduced_list))
+	count.append(len(reduced_list))
+
+# print(count)
+print(min(count))
