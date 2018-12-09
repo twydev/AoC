@@ -9,9 +9,10 @@ inp_l = [tuple(map(int,coords.split(", "))) for coords in list(inp)]
 # inp_l = [ (1,1),(1,6),(8,3),(3,4),(5,5),(8,9) ]
 
 area_map = {key : 1 for key in inp_l}
+seen = dict()
 
 # print(inp_l)
-print(len(inp_l))
+# print(len(inp_l))
 # print(area_map)
 
 xcoord = [coord[0] for coord in inp_l]
@@ -21,8 +22,8 @@ x_min = min(xcoord)
 y_max = max(ycoord)
 y_min = min(ycoord)
 
-print("x-range: ",x_min,x_max)
-print("y-range: ",y_min,y_max)
+# print("x-range: ",x_min,x_max)
+# print("y-range: ",y_min,y_max)
 
 
 def dist(coord_a, coord_b):
@@ -54,7 +55,63 @@ for x in xrange(x_min,x_max+1):
 
 for key in border:
 	del area_map[key]
-print(max(area_map.values()))
+print("max region",max(area_map.values()))
 
-# part 2 can consider using some kind of gradient descent methond
-# to find the region, then start from there
+safe = 10000
+
+def neighbours(coord,step):
+	return [(coord[0]-step,coord[1]),
+			(coord[0]+step,coord[1]),
+			(coord[0],coord[1]-step),
+			(coord[0],coord[1]+step)]
+
+def total_dist(coord):
+	if coord not in seen:
+		total_dist = 0
+		for site in inp_l:
+			total_dist += dist(coord,site)
+		seen[coord] = total_dist
+		return total_dist
+	else:
+		return seen[coord]
+
+def descent(origin_coord, origin_dist, step):
+	# print(origin_coord,origin_dist)
+	if (origin_dist < safe):
+		return origin_coord
+
+	current_dist = origin_dist
+	current_coord = origin_coord
+	
+	while not current_dist < origin_dist:
+		for neighbour in neighbours(origin_coord,step):
+			new_dist = total_dist(neighbour)
+			if new_dist < current_dist:
+				current_dist = new_dist
+				current_coord = neighbour
+		
+		if (current_coord != origin_coord):
+			return descent(current_coord,current_dist,step)
+		else:
+			step = step/2
+
+origin = descent((x_min,y_min),total_dist((0,0)),90)
+print("origin",origin)
+
+region = set()
+region.add(origin)
+frontier = set()
+frontier.add(origin)
+
+while len(frontier) != 0:
+	each = frontier.pop()
+	for neighbour in neighbours(each,1):
+		# print("Current probe",neighbour)
+		if neighbour not in region:
+			neighbour_dist = total_dist(neighbour)
+			if (neighbour_dist < safe):
+				region.add(neighbour)
+				frontier.add(neighbour)
+	# print("Frontier",frontier)
+
+print("Region Size",len(region))
