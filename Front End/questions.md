@@ -15,6 +15,7 @@ function retry(promiseFun, sleepTime, retries){
           return promiseFun(...arg).then((res)=>{return res;})  
                                    .catch((error)=>{  
                                       if(left_retries>0){  
+                                          left_retries--;
                                           return sleep(sleepTime).then(()=>operation(...arg));  
                                       }  
                                       else{  
