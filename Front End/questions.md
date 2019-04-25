@@ -23,7 +23,7 @@ function retry(promiseFun, sleepTime, retries){
                                    });  
       };  
   }  
-  retry(promiseFun,500,3).then((res)=>{//do stuff})  
+  retry(promiseFun,500,3)(...arg).then((res)=>{//do stuff})  
                          .catch((error)=>console.log(error));  
   ``` 
  ## Web General  
