@@ -16,10 +16,10 @@ Comparing functional programming to imperative programming, being unable to chan
 
 **Key Terms**
 
-**Callbacks** = function (A) passed into another function (B) to decide the invocation of (A).
-**First Class** Functions = behaviour of certain programming languages that allows functions to be assigned to variables, passed into or returned from other functions.
-**High Order Functions** = functions that takes other functions as input and return functions as output.
-**lambda** = functions that gets passed into or returned from other functions.
+- **Callbacks** = function (A) passed into another function (B) to decide the invocation of (A).
+- **First Class** Functions = behaviour of certain programming languages that allows functions to be assigned to variables, passed into or returned from other functions.
+- **High Order Functions** = functions that takes other functions as input and return functions as output.
+- **lambda** = functions that gets passed into or returned from other functions.
 
 **Tips to keep in mind**
 
